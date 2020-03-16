@@ -2,7 +2,7 @@
 <html>
 
 <body>
-    <h2>SPring MVC Demo - Home Page</h2>
+    <h2>Spring Boot Demo - Home Page</h2>
 </body>
 
 </html>
