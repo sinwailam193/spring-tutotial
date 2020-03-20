@@ -11,17 +11,16 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("postgreEmployee")
+@Repository("hibernateImpl")
 public class EmployeeDAOHibernateImpl implements EmployeeDAO {
+    @Autowired
     private EntityManager entityManger;
 
-    @Autowired
-    public EmployeeDAOHibernateImpl(EntityManager entityManager) {
-        this.entityManger = entityManager;
-    }
+    // @Autowired
+    // public EmployeeDAOHibernateImpl(EntityManager entityManager) {
+    // this.entityManger = entityManager;
+    // }
 
-    // Transactional handles transaction management so we don't have to manually
-    // start and commit transaction
     @Override
     public List<Employee> getAllEmployee() {
         // get the current hibernate session

@@ -1,48 +1,52 @@
 package com.springweb.crud.service;
 
 import java.util.List;
+import java.util.Optional;
 
-import com.springweb.crud.dao.EmployeeDAO;
+import com.springweb.crud.dao.EmployeeRepository;
 import com.springweb.crud.entity.Employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+/*
+    No need for @Transactional since JpaRepository already does it
+    By using JpaRepository, findAll, findById, save, deleteById comes with it
+*/
 
 @Service
 @Repository("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
-    private EmployeeDAO employeeDAO;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeServiceImpl(@Qualifier("postgreEmployee") EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
-    @Transactional
     public List<Employee> getAllEmployee() {
-        return employeeDAO.getAllEmployee();
+        return employeeRepository.findAll();
     }
 
     @Override
-    @Transactional
     public Employee getEmployeeById(int id) {
-        return employeeDAO.getEmployeeById(id);
+        Optional<Employee> res = employeeRepository.findById(id);
+        if (res.isPresent()) {
+            return res.get();
+        }
+        return null;
     }
 
     @Override
-    @Transactional
     public void addEmployee(Employee employee) {
-        employeeDAO.addEmployee(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
-    @Transactional
     public void deleteEmployeeById(int id) {
-        employeeDAO.deleteEmployeeById(id);
+        employeeRepository.deleteById(id);
     }
 
 }
