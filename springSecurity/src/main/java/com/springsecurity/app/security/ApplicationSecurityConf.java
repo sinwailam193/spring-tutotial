@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import static com.springsecurity.app.security.ApplicationUserRole.*;
+
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
@@ -30,17 +32,25 @@ public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
          * use basic authentication to do that. antMatchers allows us to whitelist some
          * path and permit them all
          */
-        http.authorizeRequests().antMatchers("/", "index", "/css/*", "/js/*").permitAll().anyRequest().authenticated()
-                .and().httpBasic();
+        http.csrf().disable().authorizeRequests().antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/api/**").hasRole(STUDENT.name()).anyRequest().authenticated().and().httpBasic();
     }
 
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
         // this is how you retrieve your user from the database
-        UserDetails testUser = User.builder().username("aaronlam").password(passwordEncoder.encode("password"))
-                .roles("STUDENT") // ROLE_STUDENT
+        UserDetails aaronUser = User.builder().username("aaronlam").password(passwordEncoder.encode("password"))
+                .roles(STUDENT.name()) // ROLE_STUDENT
                 .build();
-        return new InMemoryUserDetailsManager(testUser);
+
+        UserDetails lindaUser = User.builder().username("linda").password(passwordEncoder.encode("password123"))
+                .roles(ADMIN.name()) // ROLE_ADMIN
+                .build();
+
+        UserDetails tomUser = User.builder().username("tom").password(passwordEncoder.encode("password123"))
+                .roles(ADMINTRAINEE.name()) // ROLE_ADMIN_TRAINEE
+                .build();
+        return new InMemoryUserDetailsManager(aaronUser, lindaUser, tomUser);
     }
 }

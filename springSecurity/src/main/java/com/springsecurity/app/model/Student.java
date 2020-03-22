@@ -10,10 +10,15 @@ public class Student {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + id + "'" + ", name='" + name + "'" + "}";
     }
 }
