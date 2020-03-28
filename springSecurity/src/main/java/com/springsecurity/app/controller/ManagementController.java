@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("management/api/v1/students")
+@RequestMapping("/management/api/v1/students")
 public class ManagementController {
     private static final List<Student> students = Arrays.asList(new Student(1, "Aaron Lam"),
             new Student(2, "Maria Gorva"), new Student(3, "Tyler Austin"));
