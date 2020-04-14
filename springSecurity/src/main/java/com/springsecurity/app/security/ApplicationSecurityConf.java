@@ -35,7 +35,7 @@ public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
          * path and permit them all
          */
         http
-            //.csrf().disable()
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
             // .antMatchers("/api/**").hasRole(STUDENT.name()) === @PreAuthorize("hasRole(\"ROLE_STUDENT\")")
@@ -50,7 +50,7 @@ public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
             .anyRequest()
             .authenticated()
             .and()
-            .httpBasic();
+            .formLogin();
     }
 
     @Override

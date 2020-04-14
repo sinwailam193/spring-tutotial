@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/student")
 public class StudentController {
     private static final List<Student> students = Arrays.asList(
-            new Student(1, "Aaron Lam"),
-            new Student(2, "Maria Gorva"),
-            new Student(3, "Tyler Austin")
-        );
+        new Student(1, "Aaron Lam"),
+        new Student(2, "Maria Gorva"),
+        new Student(3, "Tyler Austin")
+    );
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole(\"ROLE_STUDENT\")")
