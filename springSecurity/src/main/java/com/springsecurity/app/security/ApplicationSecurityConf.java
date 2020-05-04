@@ -1,6 +1,8 @@
 package com.springsecurity.app.security;
 
+import com.springsecurity.app.YamlConfig;
 import com.springsecurity.app.auth.ApplicationUserService;
+import com.springsecurity.app.jwt.JwtUsernamePasswordAuthenticationFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -20,9 +23,11 @@ public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
     // The password encoder will be the BCryptPasswordEncoder from PasswordConf.java
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
+    private final YamlConfig config;
 
     @Autowired
-    public ApplicationSecurityConf(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
+    public ApplicationSecurityConf(YamlConfig config, PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
+        this.config = config;
         this.passwordEncoder = passwordEncoder;
         this.applicationUserService = applicationUserService;
     }
@@ -36,6 +41,9 @@ public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
          */
         http
             .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), config))
             .authorizeRequests()
             .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
             // .antMatchers("/api/**").hasRole(STUDENT.name()) === @PreAuthorize("hasRole(\"ROLE_STUDENT\")")
@@ -48,9 +56,7 @@ public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
             // // anyone that has the role of ADMIN or ADMINTRAINEE can use GET /management/api
             // .antMatchers(HttpMethod.GET, "/management/api/**").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name()) === @PreAuthorize("hasAnyRole(\"ROLE_ADMIN\", \"ROLE_ADMINTRAINEE\")")
             .anyRequest()
-            .authenticated()
-            .and()
-            .formLogin();
+            .authenticated();
     }
 
     @Override
