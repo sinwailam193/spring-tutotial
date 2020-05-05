@@ -1,1 +1,5 @@
-jwtSecret: "%cz&ZS^p!oN$OuveDlgTYbhCfLAO67wlnfwnenkebkebenbklblrnblnrbklnrbln"
+app:
+    jwt:
+        secretKey: "%cz&ZS^p!oN$OuveDlgTYbhCfLAO67wlnfwnenkebkebenbklblrnblnrbklnrbln"
+        tokenPrefix: "Bearer "
+        tokenExpirationAfterDays: 14

@@ -1,7 +1,8 @@
 package com.springsecurity.app.security;
 
-import com.springsecurity.app.YamlConfig;
 import com.springsecurity.app.auth.ApplicationUserService;
+import com.springsecurity.app.jwt.JwtConfig;
+import com.springsecurity.app.jwt.JwtTokenVerifier;
 import com.springsecurity.app.jwt.JwtUsernamePasswordAuthenticationFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,10 @@ public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
     // The password encoder will be the BCryptPasswordEncoder from PasswordConf.java
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
-    private final YamlConfig config;
+    private final JwtConfig config;
 
     @Autowired
-    public ApplicationSecurityConf(YamlConfig config, PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
+    public ApplicationSecurityConf(JwtConfig config, PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
         this.config = config;
         this.passwordEncoder = passwordEncoder;
         this.applicationUserService = applicationUserService;
@@ -44,6 +45,7 @@ public class ApplicationSecurityConf extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), config))
+            .addFilterAfter(new JwtTokenVerifier(config), JwtUsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
             .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
             // .antMatchers("/api/**").hasRole(STUDENT.name()) === @PreAuthorize("hasRole(\"ROLE_STUDENT\")")

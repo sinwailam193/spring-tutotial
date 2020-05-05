@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springsecurity.app.YamlConfig;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,13 +18,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
-    private final YamlConfig config;
+    private final JwtConfig config;
 
-    public JwtUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager, YamlConfig config) {
+    public JwtUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager, JwtConfig config) {
         this.authenticationManager = authenticationManager;
         this.config = config;
     }
@@ -41,7 +39,6 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
             );
             return authenticationManager.authenticate(authentication);
         } catch (IOException e) {
-            System.out.println("it failed");
             throw new RuntimeException(e);
         }
     }
@@ -59,9 +56,9 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
             .claim("authorities", authResult.getAuthorities())
             .setIssuedAt(new Date())
             .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
-            .signWith(Keys.hmacShaKeyFor(config.getJwtSecret().getBytes()))
+            .signWith(config.getSecretKeySigning())
             .compact();
 
-        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader(config.getAuthroizationHeader(), config.getTokenPrefix() + token);
     }
 }
