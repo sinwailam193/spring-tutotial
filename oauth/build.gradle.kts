@@ -16,6 +16,13 @@ repositories {
 }
 
 dependencies {
+	api("io.jsonwebtoken:jjwt-api:0.11.1")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.1")
+    runtimeOnly("io.jsonwebtoken:jjwt-orgjson:0.11.1") {
+        exclude(group = "org.json", module = "json")
+    }
+	implementation("javax.validation:validation-api")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
