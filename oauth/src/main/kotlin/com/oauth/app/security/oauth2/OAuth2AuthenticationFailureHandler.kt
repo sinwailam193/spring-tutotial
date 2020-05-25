@@ -1,5 +1,6 @@
 package com.oauth.app.security.oauth2
 
+import com.oauth.app.config.AppProperties
 import com.oauth.app.utils.CookieUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.AuthenticationException
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 class OAuth2AuthenticationFailureHandler : SimpleUrlAuthenticationFailureHandler() {
+    @Autowired
+    lateinit var appProperties: AppProperties
+
     @Autowired
     lateinit var httpCookieOAuth2AuthorizationRequestRepository: HttpCookieOAuth2AuthorizationRequestRepository
 

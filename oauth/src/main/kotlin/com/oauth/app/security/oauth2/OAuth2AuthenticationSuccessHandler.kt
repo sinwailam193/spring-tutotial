@@ -8,8 +8,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 import org.springframework.stereotype.Component
 import java.io.IOException
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -41,12 +39,10 @@ class OAuth2AuthenticationSuccessHandler @Autowired internal constructor(
         val redirectUri = CookieUtils.getCookie(request, HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_COOKIE_NAME)
                 .map { it.value }
                 .orElse(defaultTargetUrl)
-        val token = tokenProvider.createToken(authentication)
-        val bearToken = URLEncoder.encode("Bearer $token", StandardCharsets.UTF_8.toString())
         CookieUtils.addCookie(
                 response,
                 HttpCookieOAuth2AuthorizationRequestRepository.JWT_TOKEN_NAME,
-                bearToken,
+                tokenProvider.createToken(authentication),
                 convertMsecToSec()
         )
         return redirectUri

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class HttpCookieOAuth2AuthorizationRequestRepository : AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
     companion object {
-        val JWT_TOKEN_NAME = "authorization"
+        val JWT_TOKEN_NAME = "Authorization"
         val AUTHORIZATION_COOKIE_NAME = "auth_req"
         val REDIRECT_COOKIE_NAME = "r"
     }

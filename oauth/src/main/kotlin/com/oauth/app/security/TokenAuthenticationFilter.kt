@@ -31,18 +31,16 @@ class TokenAuthenticationFilter : OncePerRequestFilter() {
             authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
             SecurityContextHolder.getContext().authentication = authentication
         } else {
-            logError.error("JWT is not found in cookie")
+            logError.error("Could not set user authentication in security context");
         }
         filterChain.doFilter(request, response)
     }
 
     private fun getJwtFromRequest(request: HttpServletRequest): String? {
-        val bearerToken = CookieUtils.getCookie(request, HttpCookieOAuth2AuthorizationRequestRepository.JWT_TOKEN_NAME)
-                .map { it.value }
-                .orElse(null)
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer+")) {
+        val bearerToken = request.getHeader(HttpCookieOAuth2AuthorizationRequestRepository.JWT_TOKEN_NAME)
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length);
         }
-        return null;
+        return null
     }
 }
