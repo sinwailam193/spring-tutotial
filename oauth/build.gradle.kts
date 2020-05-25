@@ -21,6 +21,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-orgjson:0.11.1") {
         exclude(group = "org.json", module = "json")
     }
+	implementation("org.json:json:20180130")
 	implementation("javax.validation:validation-api")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")

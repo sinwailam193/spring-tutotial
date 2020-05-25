@@ -1,6 +1,6 @@
 package com.oauth.app.security.oauth2.user
 
-class GoogleOAuth2UserInfo(attributes: Map<String, Any>): OAuth2UserInfo(attributes) {
+class GoogleOAuth2UserInfo(attributes: Map<String, Any>) : OAuth2UserInfo(attributes) {
     override val id: String
         // defining our own custom getter
         get() = attributes["sub"] as String
@@ -11,6 +11,6 @@ class GoogleOAuth2UserInfo(attributes: Map<String, Any>): OAuth2UserInfo(attribu
     override val email: String
         get() = attributes["email"] as String
 
-    override val imageUrl: String
+    override val picture: String
         get() = attributes["picture"] as String
 }

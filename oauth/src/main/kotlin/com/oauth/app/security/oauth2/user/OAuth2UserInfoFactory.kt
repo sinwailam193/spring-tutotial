@@ -9,7 +9,6 @@ object OAuth2UserInfoFactory {
         if (registrationId == AuthProvider.google.toString()) {
             return GoogleOAuth2UserInfo(attributes)
         }
-        println(123)
         throw OAuth2AuthenticationProcessingException("Sorry! Login with $registrationId is not supported yet.")
     }
 }

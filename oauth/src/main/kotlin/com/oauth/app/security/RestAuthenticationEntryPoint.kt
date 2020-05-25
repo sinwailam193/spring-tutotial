@@ -14,7 +14,7 @@ In this case, we simply return a 401 Unauthorized response
  */
 
 class RestAuthenticationEntryPoint : AuthenticationEntryPoint {
-    private val logger = LoggerFactory.getLogger(RestAuthenticationEntryPoint::class.java)
+    private val logError = LoggerFactory.getLogger(RestAuthenticationEntryPoint::class.java)
 
     @Throws(IOException::class, ServletException::class)
     override fun commence(
@@ -22,7 +22,7 @@ class RestAuthenticationEntryPoint : AuthenticationEntryPoint {
             response: HttpServletResponse,
             authException: AuthenticationException
     ) {
-        logger.error("Responding with unauthorized error. Message - ${authException.message}")
+        logError.error("Responding with unauthorized error. Message - ${authException.message}")
         response.sendError(
                 HttpServletResponse.SC_UNAUTHORIZED,
                 authException.localizedMessage

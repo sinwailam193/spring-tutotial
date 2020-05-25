@@ -7,8 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.oauth2.core.user.OAuth2User
 
 class UserPrincipal(
-        private val id: Long,
-        private val email: String,
+        val user: User,
         private val authorities: Collection<GrantedAuthority>
 ) : OAuth2User, UserDetails {
     private var attributes: Map<String, Any>? = null
@@ -18,7 +17,7 @@ class UserPrincipal(
     }
 
     override fun getUsername(): String {
-        return email
+        return user.email!!
     }
 
     override fun isAccountNonExpired(): Boolean {
@@ -47,14 +46,13 @@ class UserPrincipal(
 
 
     override fun getName(): String {
-        return id.toString()
+        return user.name!!
     }
 
     companion object {
-        private fun create(user: User): UserPrincipal {
+        fun create (user: User): UserPrincipal {
             return UserPrincipal(
-                    user.id!!,
-                    user.email!!,
+                    user,
                     listOf(SimpleGrantedAuthority("ROLE_USER"))
             )
         }

@@ -60,7 +60,7 @@ class CustomOAuth2UserService : DefaultOAuth2UserService() {
 
     private fun updateExistingUser(exisitingUser: User, oAuth2User: OAuth2UserInfo): User {
         exisitingUser.name = oAuth2User.name
-        exisitingUser.imageUrl = oAuth2User.imageUrl
+        exisitingUser.picture = oAuth2User.picture
         return exisitingUser
     }
 
@@ -72,7 +72,7 @@ class CustomOAuth2UserService : DefaultOAuth2UserService() {
         user.providerId = oAuth2User.id
         user.name = oAuth2User.name
         user.email = oAuth2User.email
-        user.imageUrl = oAuth2User.imageUrl
+        user.picture = oAuth2User.picture
         return userRepository.save(user)
     }
 }

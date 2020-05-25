@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 class HttpCookieOAuth2AuthorizationRequestRepository : AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
-    private val AUTHORIZATION_COOKIE_NAME = "authorization"
+    companion object {
+        val JWT_TOKEN_NAME = "authorization"
+        val AUTHORIZATION_COOKIE_NAME = "auth_req"
+        val REDIRECT_COOKIE_NAME = "r"
+    }
     private val cookieExpireSeconds = 180
 
     override fun loadAuthorizationRequest(request: HttpServletRequest): OAuth2AuthorizationRequest = CookieUtils
@@ -31,6 +35,11 @@ class HttpCookieOAuth2AuthorizationRequestRepository : AuthorizationRequestRepos
                 cookieExpireSeconds
         )
 //        TODO("use Referer to be the redirect url and add it to the cookie")
-        CookieUtils.addCookie(response, "r", "/restricted", cookieExpireSeconds);
+        CookieUtils.addCookie(response, REDIRECT_COOKIE_NAME, "/restricted", cookieExpireSeconds);
+    }
+
+    fun removeAuthorizationRequestCookies(request: HttpServletRequest, response: HttpServletResponse) {
+        CookieUtils.deleteCookie(request, response, AUTHORIZATION_COOKIE_NAME)
+        CookieUtils.deleteCookie(request, response, REDIRECT_COOKIE_NAME)
     }
 }
