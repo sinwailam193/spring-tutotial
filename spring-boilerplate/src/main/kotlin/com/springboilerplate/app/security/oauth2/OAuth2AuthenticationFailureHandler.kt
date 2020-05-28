@@ -1,6 +1,6 @@
 package com.springboilerplate.app.security.oauth2
 
-import com.springboilerplate.app.config.AppProperties
+import com.springboilerplate.app.config.App
 import com.springboilerplate.app.utils.CookieUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.AuthenticationException
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class OAuth2AuthenticationFailureHandler : SimpleUrlAuthenticationFailureHandler() {
     @Autowired
-    lateinit var appProperties: AppProperties
+    lateinit var app: App
 
     @Autowired
     lateinit var httpCookieOAuth2AuthorizationRequestRepository: HttpCookieOAuth2AuthorizationRequestRepository
@@ -34,6 +34,6 @@ class OAuth2AuthenticationFailureHandler : SimpleUrlAuthenticationFailureHandler
                 .build().toUriString()
 
         httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response)
-        redirectStrategy.sendRedirect(request, response, "${appProperties.redirectHost}$targetUrl")
+        redirectStrategy.sendRedirect(request, response, "${app.redirectHost}$targetUrl")
     }
 }

@@ -1,7 +1,8 @@
-package com.springboilerplate.app.security
+package com.springboilerplate.app.services
 
 import com.springboilerplate.app.exception.ResourceNotFoundException
 import com.springboilerplate.app.repository.UserRepository
+import com.springboilerplate.app.security.UserPrincipal
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService

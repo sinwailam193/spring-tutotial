@@ -1,7 +1,7 @@
 package com.springboilerplate.app.security.oauth2.user
 
 import com.springboilerplate.app.exception.OAuth2AuthenticationProcessingException
-import com.springboilerplate.app.model.AuthProvider
+import com.springboilerplate.app.models.AuthProvider
 
 object OAuth2UserInfoFactory {
     @Throws(OAuth2AuthenticationProcessingException::class)

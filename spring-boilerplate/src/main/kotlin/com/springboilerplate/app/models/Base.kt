@@ -1,4 +1,4 @@
-package com.springboilerplate.app.model
+package com.springboilerplate.app.models
 
 import java.util.Date
 import javax.persistence.*

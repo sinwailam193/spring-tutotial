@@ -1,8 +1,8 @@
-package com.springboilerplate.app.security.oauth2
+package com.springboilerplate.app.services
 
 import com.springboilerplate.app.exception.OAuth2AuthenticationProcessingException
-import com.springboilerplate.app.model.AuthProvider
-import com.springboilerplate.app.model.User
+import com.springboilerplate.app.models.AuthProvider
+import com.springboilerplate.app.models.User
 import com.springboilerplate.app.repository.UserRepository
 import com.springboilerplate.app.security.UserPrincipal
 import com.springboilerplate.app.security.oauth2.user.OAuth2UserInfo

@@ -2,7 +2,7 @@ package com.springboilerplate.app.config
 
 import com.springboilerplate.app.security.RestAuthenticationEntryPoint
 import com.springboilerplate.app.security.TokenAuthenticationFilter
-import com.springboilerplate.app.security.oauth2.CustomOAuth2UserService
+import com.springboilerplate.app.services.CustomOAuth2UserService
 import com.springboilerplate.app.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository
 import com.springboilerplate.app.security.oauth2.OAuth2AuthenticationFailureHandler
 import com.springboilerplate.app.security.oauth2.OAuth2AuthenticationSuccessHandler
@@ -57,7 +57,14 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                     .authenticationEntryPoint(RestAuthenticationEntryPoint())
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/")
+                    .antMatchers(
+                        "/",
+                        "/**/favicon.ico",
+                        "/**/*.svg",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/**/*.json"
+                    )
                         .permitAll()
                     .antMatchers("/oauth2/**")
                         .permitAll()

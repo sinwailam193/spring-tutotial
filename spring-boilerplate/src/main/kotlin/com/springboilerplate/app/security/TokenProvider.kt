@@ -1,6 +1,6 @@
 package com.springboilerplate.app.security
 
-import com.springboilerplate.app.config.AppProperties
+import com.springboilerplate.app.config.App
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.MalformedJwtException
@@ -15,26 +15,26 @@ import org.springframework.stereotype.Service
 import java.util.Date
 
 @Service
-class TokenProvider @Autowired internal constructor(private val appProperties: AppProperties) {
+class TokenProvider @Autowired internal constructor(private val app: App) {
     private val logError = LoggerFactory.getLogger(TokenProvider::class.java)
 
     fun createToken(authentication: Authentication): String {
         val userPrincipal = authentication.principal as UserPrincipal
 
         val now = Date()
-        val expiryDate = Date(now.time + appProperties.auth.tokenExpirationMsec)
+        val expiryDate = Date(now.time + app.auth.tokenExpirationMsec)
 
         return Jwts.builder()
                 .setSubject(userPrincipal.user.id.toString())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(appProperties.auth.tokenSecret)))
+                .signWith(Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(app.auth.tokenSecret)))
                 .compact()
     }
 
     fun getUserIdFromToken(token: String): Long {
         val claims = Jwts.parserBuilder()
-                .setSigningKey(appProperties.auth.tokenSecret)
+                .setSigningKey(app.auth.tokenSecret)
                 .build()
                 .parseClaimsJws(token)
                 .body
@@ -44,7 +44,7 @@ class TokenProvider @Autowired internal constructor(private val appProperties: A
     fun validateToken(authToken: String): Boolean {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(appProperties.auth.tokenSecret)
+                    .setSigningKey(app.auth.tokenSecret)
                     .build()
                     .parseClaimsJws(authToken)
             return true

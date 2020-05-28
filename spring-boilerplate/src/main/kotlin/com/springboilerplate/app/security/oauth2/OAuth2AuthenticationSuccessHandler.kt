@@ -1,6 +1,6 @@
 package com.springboilerplate.app.security.oauth2
 
-import com.springboilerplate.app.config.AppProperties
+import com.springboilerplate.app.config.App
 import com.springboilerplate.app.security.TokenProvider
 import com.springboilerplate.app.utils.CookieUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class OAuth2AuthenticationSuccessHandler @Autowired internal constructor(
         private val tokenProvider: TokenProvider,
-        private val appProperties: AppProperties,
+        private val app: App,
         private val httpCookieOAuth2AuthorizationRequestRepository: HttpCookieOAuth2AuthorizationRequestRepository
 ) : SimpleUrlAuthenticationSuccessHandler() {
     @Throws(IOException::class, ServletException::class)
@@ -27,7 +27,7 @@ class OAuth2AuthenticationSuccessHandler @Autowired internal constructor(
             return
         }
         clearAuthenticationAttributes(request, response)
-        redirectStrategy.sendRedirect(request, response, "${appProperties.redirectHost}$targetUrl")
+        redirectStrategy.sendRedirect(request, response, "${app.redirectHost}$targetUrl")
     }
 
     protected fun clearAuthenticationAttributes(request: HttpServletRequest, response: HttpServletResponse) {
@@ -48,5 +48,5 @@ class OAuth2AuthenticationSuccessHandler @Autowired internal constructor(
         return redirectUri
     }
 
-    private fun convertMsecToSec(): Int = TimeUnit.MILLISECONDS.toSeconds(appProperties.auth.tokenExpirationMsec).toInt()
+    private fun convertMsecToSec(): Int = TimeUnit.MILLISECONDS.toSeconds(app.auth.tokenExpirationMsec).toInt()
 }

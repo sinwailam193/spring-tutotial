@@ -1,3 +1,32 @@
 spring:
   profiles:
     active: dev
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 10
+    url: jdbc:postgresql://${DB_HOST}:5432/${DB_DATABASE}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  security:
+      oauth2:
+        client:
+          registration:
+            google:
+              clientId: ${GOOGLE_CLIENT_ID}
+              clientSecret: ${GOOGLE_CLIENT_SECRET}
+              redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+              scope:
+                - email
+                - profile
+graphql:
+    tools:
+        schema-location-pattern: "**/*.graphqls"
+        introspection-enabled: true
+app:
+  auth:
+    tokenSecret: ${TOKEN_SECRET}
+    tokenExpirationMsec: 1209600000

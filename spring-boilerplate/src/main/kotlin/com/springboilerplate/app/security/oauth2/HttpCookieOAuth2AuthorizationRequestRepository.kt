@@ -43,8 +43,4 @@ class HttpCookieOAuth2AuthorizationRequestRepository : AuthorizationRequestRepos
         CookieUtils.deleteCookie(request, response, AUTHORIZATION_COOKIE_NAME)
         CookieUtils.deleteCookie(request, response, REDIRECT_COOKIE_NAME)
     }
-
-    fun removeNotValidUserCookie(request: HttpServletRequest, response: HttpServletResponse) {
-        CookieUtils.deleteCookie(request, response, JWT_COOKIE_NAME)
-    }
 }
