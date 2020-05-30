@@ -21,20 +21,24 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-orgjson:0.11.1") {
         exclude(group = "org.json", module = "json")
     }
+
+	implementation("com.zhokhov.graphql:graphql-datetime-spring-boot-starter:1.9.0")
 	implementation("com.graphql-java-kickstart:graphql-spring-boot-starter:7.0.1")
 	implementation("com.graphql-java-kickstart:graphql-java-tools:6.0.2")
+	runtimeOnly("com.graphql-java-kickstart:altair-spring-boot-starter:7.0.1")
+
 	implementation("org.json:json:20180130")
 	implementation("javax.validation:validation-api")
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	runtimeOnly("org.postgresql:postgresql")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("com.graphql-java-kickstart:altair-spring-boot-starter:7.0.1")
-	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}

@@ -24,7 +24,7 @@ spring:
                 - profile
 graphql:
     tools:
-        schema-location-pattern: "**/*.graphqls"
+        schema-location-pattern: "**/*.graphql"
         introspection-enabled: true
 app:
   auth:

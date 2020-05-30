@@ -1,0 +1,10 @@
+type User {
+    id: Int!
+    name: String!
+    email: String!
+    picture: String!
+    provider: Provider!
+    createdAt: Date!
+    updatedAt: Date!
+    deletedAt: Date
+}
