@@ -1,0 +1,2 @@
+app:
+  redirectHost: "http://localhost:3000"
