@@ -5,12 +5,12 @@ import com.springboilerplate.app.models.User
 import com.springboilerplate.app.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
+import java.util.*
 
 @Component
 class UserQuery : Query {
     @Autowired
     lateinit var userService: UserService
 
-    suspend fun getPerson(id: Long, date: LocalDateTime): User? = userService.fetchUser(id)
+    suspend fun getPerson(id: Long, date: Date?): User? = userService.fetchUser(id)
 }

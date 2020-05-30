@@ -1,9 +1,9 @@
 package com.springboilerplate.app.models
 
-import java.time.LocalDateTime
+import java.util.Date
 
 open class BaseModel {
-    lateinit var createdAt: LocalDateTime
-    lateinit var updatedAt: LocalDateTime
-    var deletedAt: LocalDateTime? = null
+    lateinit var createdAt: Date
+    lateinit var updatedAt: Date
+    var deletedAt: Date? = null
 }

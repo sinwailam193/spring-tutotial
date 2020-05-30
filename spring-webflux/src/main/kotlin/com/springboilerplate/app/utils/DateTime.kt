@@ -1,13 +1,14 @@
 package com.springboilerplate.app.utils
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.Date
 
 object DateTime {
-    fun convertStrTime(str: String?): LocalDateTime? {
+    fun convertStrTime(str: String?): Date? {
         if (str != null) {
-            val format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            return LocalDateTime.parse(str.substring(0, 19), format)
+            val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val strReplace = str.substring(0, 19).replace(Regex("""[TZ]"""), " ")
+            return format.parse(strReplace)
         }
         return null
     }
