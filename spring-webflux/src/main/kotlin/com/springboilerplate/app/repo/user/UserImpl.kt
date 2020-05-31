@@ -19,7 +19,8 @@ class UserImpl : UserRepo {
                 id = rs.getLong("id"),
                 name = rs.getString("name"),
                 email = rs.getString("email"),
-                provider = Provider.valueOf(rs.getString("provider"))
+                provider = Provider.valueOf(rs.getString("provider")),
+                picture = rs.getString("picture")
         )
         user.createdAt = DateTime.convertStrTime(
                 rs.getString("created_at")

@@ -12,5 +12,5 @@ class UserQuery : Query {
     @Autowired
     lateinit var userService: UserService
 
-    suspend fun getPerson(id: Long, date: Date?): User? = userService.fetchUser(id)
+    suspend fun getPerson(id: Long): User? = userService.fetchUser(id)
 }
